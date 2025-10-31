@@ -1,0 +1,166 @@
+/* styles.css
+   Pixel-perfect attempt to match the supplied image:
+   - dark background (#05061a)
+   - right-anchored background image (palhaço + balão)
+   - left column with stacked cards (8 total)
+   - responsive mobile-first
+*/
+
+/* === Variáveis para ajustes finos ===
+   Ajuste --left-column-width e --card-width para calibrar posicionamento */
+:root{
+  --bg: #05061a;
+  --card-bg: #ffffff;
+  --card-radius: 12px;
+  --card-shadow: 0 6px 18px rgba(0,0,0,0.25);
+  --left-column-width: 78vw; /* mobile: cards ocupam ~78% do viewport width */
+  --card-height: 150px;      /* altura aproximada do card */
+}
+
+/* Reset simples */
+*{box-sizing:border-box}
+html,body{height:100%}
+body{
+  margin:0;
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+  background-color: var(--bg);
+  color:#fff;
+  /* background image anchored to right center, cover */
+  background-image: url("assets/bg-right-art.png");
+  background-position: right center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  min-height:100vh;
+  -webkit-font-smoothing:antialiased;
+  -moz-osx-font-smoothing:grayscale;
+}
+
+/* Header / logo */
+.site-header{
+  position:relative;
+  padding: 18px 18px 0 18px; /* bastante espaço acima conforme imagem */
+}
+.site-logo{
+  max-width: 42vw; /* keep it prominent on mobile */
+  height: auto;
+  display:block;
+  object-fit:contain;
+  margin-left: 4px;
+}
+
+/* Main layout */
+.site-main{
+  display:flex;
+  align-items:flex-start;
+  gap: 16px;
+  padding: 8px 12px 24px 12px;
+  min-height: calc(100vh - 70px); /* header space */
+  position:relative;
+}
+
+/* Left column containing scrollable cards */
+.left-column{
+  width: var(--left-column-width);
+  max-height: calc(100vh - 110px);
+  overflow: auto;
+  padding: 12px 12px 24px 12px; /* espaçamento interno generoso */
+}
+
+/* Hide default scrollbar but keep it accessible.
+   On desktops this will hide visual scrollbars, but users can still scroll. */
+.left-column::-webkit-scrollbar{width:8px;height:8px}
+.left-column::-webkit-scrollbar-thumb{background:transparent}
+.left-column{scrollbar-width: none; -ms-overflow-style: none;}
+.left-column::-webkit-scrollbar { display: none; }
+
+/* Episodes list container (vertical stack) */
+.episodes-list{
+  display:flex;
+  flex-direction:column;
+  gap: 22px; /* vertical gap between cards */
+}
+
+/* Card visual */
+.card{
+  background: var(--card-bg);
+  border-radius: var(--card-radius);
+  box-shadow: var(--card-shadow);
+  padding: 18px;
+  height: var(--card-height);
+  display:flex;
+  flex-direction:column;
+  justify-content:center;
+  color: #111; /* texto escuro sobre cartão branco */
+  cursor: pointer;
+  transition: transform 150ms ease, box-shadow 150ms ease;
+  outline: none;
+  user-select: none;
+}
+
+/* Inner appearance */
+.card-title{
+  margin:0;
+  font-size: 1rem;
+  letter-spacing: 1px;
+  font-weight:700;
+}
+.card-sub{
+  margin:6px 0 0 0;
+  font-size: 0.85rem;
+  color: rgba(0,0,0,0.6);
+}
+
+/* Hover & focus */
+.card:hover{ transform: translateY(-4px); }
+.card:focus{ box-shadow: 0 8px 22px rgba(0,0,0,0.35); }
+
+/* Active state (selecionado) — realce sem alterar composição principal */
+.card.active{
+  box-shadow: 0 10px 30px rgba(0,0,0,0.45), 0 0 0 4px rgba(255,255,255,0.06) inset;
+  transform: translateY(-6px);
+}
+
+/* Player area (positioned to the right of the cards; responsive) */
+.player-wrap{
+  /* center-right; on mobile appear below the header but to the right of left column */
+  margin-left: auto;
+  align-self:center;
+  padding-right: 8vw; /* creates visual space so it sits over the right art nicely */
+}
+
+/* Video sizing */
+#player{
+  width: clamp(320px, 42vw, 560px); /* mobile 320-420ish, desktop larger */
+  height: auto;
+  max-height: calc(100vh - 160px);
+  border-radius: 10px;
+  box-shadow: 0 12px 32px rgba(0,0,0,0.6);
+  background: #000;
+}
+
+/* Small helper: visually-hidden for screen readers */
+.sr-only{
+  position: absolute !important;
+  width: 1px; height: 1px;
+  padding: 0; margin: -1px;
+  overflow: hidden; clip: rect(0,0,0,0); white-space: nowrap; border: 0;
+}
+
+/* Responsive adjustments for larger viewports (tablet/desktop) */
+@media (min-width: 768px){
+  :root{ --left-column-width: 36vw; --card-height: 160px; }
+  .site-logo{ max-width: 260px; } /* keep logo reasonable on wider screens */
+  .left-column{ padding-top: 26px; max-height: calc(100vh - 120px); }
+  .player-wrap{ padding-right: 6vw; }
+}
+
+/* Extremely wide screens: ensure background art remains visible at right */
+@media (min-width: 1200px){
+  :root{ --left-column-width: 34vw; }
+}
+
+/* Acessibilidade visual: garante contraste entre texto e fundo do card */
+.card-title, .card-sub { color: #111; }
+
+/* small tweaks for links in fallback */
+.video-fallback a{ color: #c71f1f; text-decoration: underline; }
