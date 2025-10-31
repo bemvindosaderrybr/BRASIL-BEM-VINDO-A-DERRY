@@ -1,0 +1,76 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>IT — Episódios</title>
+  <meta name="description" content="Repositório com layout fiel à imagem — coluna de episódios à esquerda e arte à direita.">
+  <link rel="stylesheet" href="styles.css">
+  <!-- favicon opcional: colocá-lo em assets/favicon.ico e descomentar abaixo -->
+  <!-- <link rel="icon" href="assets/favicon.ico"> -->
+</head>
+<body>
+  <!-- Header com logotipo no canto superior esquerdo -->
+  <header class="site-header" role="banner">
+    <img src="assets/logo.png" alt="Logo: IT — Welcome to Derry" class="site-logo">
+  </header>
+
+  <main class="site-main" id="main" role="main">
+    <!-- Coluna de episódios (scrollable) -->
+    <nav class="left-column" aria-label="Lista de episódios">
+      <div class="episodes-list" id="episodesList">
+        <!-- 8 cards gerados estaticamente — cada um com data-video-src (substitua os caminhos pelos seus arquivos) -->
+        <div class="card" role="button" tabindex="0" aria-label="Episódio 1 — abrir no player" data-video-src="assets/episode1.mp4" data-episode="1">
+          <h3 class="card-title">EPISÓDIO 1</h3>
+          <p class="card-sub">Clique para carregar no player</p>
+        </div>
+
+        <div class="card" role="button" tabindex="0" aria-label="Episódio 2 — abrir no player" data-video-src="assets/episode2.mp4" data-episode="2">
+          <h3 class="card-title">EPISÓDIO 2</h3>
+        </div>
+
+        <div class="card" role="button" tabindex="0" aria-label="Episódio 3 — abrir no player" data-video-src="assets/episode3.mp4" data-episode="3">
+          <h3 class="card-title">EPISÓDIO 3</h3>
+        </div>
+
+        <div class="card" role="button" tabindex="0" aria-label="Episódio 4 — abrir no player" data-video-src="assets/episode4.mp4" data-episode="4">
+          <h3 class="card-title">EPISÓDIO 4</h3>
+        </div>
+
+        <div class="card" role="button" tabindex="0" aria-label="Episódio 5 — abrir no player" data-video-src="assets/episode5.mp4" data-episode="5">
+          <h3 class="card-title">EPISÓDIO 5</h3>
+        </div>
+
+        <div class="card" role="button" tabindex="0" aria-label="Episódio 6 — abrir no player" data-video-src="assets/episode6.mp4" data-episode="6">
+          <h3 class="card-title">EPISÓDIO 6</h3>
+        </div>
+
+        <div class="card" role="button" tabindex="0" aria-label="Episódio 7 — abrir no player" data-video-src="assets/episode7.mp4" data-episode="7">
+          <h3 class="card-title">EPISÓDIO 7</h3>
+        </div>
+
+        <div class="card" role="button" tabindex="0" aria-label="Episódio 8 — abrir no player" data-video-src="assets/episode8.mp4" data-episode="8">
+          <h3 class="card-title">EPISÓDIO 8</h3>
+        </div>
+
+      </div>
+    </nav>
+
+    <!-- Player central-direito (sobreposto levemente ao background) -->
+    <section class="player-wrap" aria-live="polite" aria-atomic="true">
+      <video id="player" controls preload="metadata" poster="assets/poster.jpg">
+        <source id="playerSource" src="" type="video/mp4">
+        Seu navegador não suporta reprodução de vídeo.
+        <!-- fallback: link para download do primeiro episódio (ou ao carregar um episódio, o JS atualiza a mensagem) -->
+        <div class="video-fallback">
+          <p>Se o player não funcionar, <a id="downloadLink" href="#">baixe o vídeo aqui</a>.</p>
+        </div>
+      </video>
+      <!-- elemento oculto para anunciar carregamento via aria-live (visível apenas para tecnologias assistivas) -->
+      <div id="announce" class="sr-only" aria-live="polite"></div>
+    </section>
+  </main>
+
+  <script src="scripts.js" defer></script>
+</body>
+</html>
